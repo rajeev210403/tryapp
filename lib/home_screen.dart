@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
@@ -8,39 +9,50 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () {
-                // Add search functionality here
-              },
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0, top: 10.0), // Add padding to the left and top of the home text
+              child: Text(
+                'Home',
+                style: TextStyle(
+                  fontSize: 30, // Adjust font size as needed
+                  fontWeight: FontWeight.bold, // Make the text bold
+                ),
+              ),
             ),
-          ),
-        ],
-        // debug
-        backgroundColor: Colors.white, // Set the app bar background color to white
-        iconTheme: const IconThemeData(color: Colors.black), // Set the app bar icon color to black
-      ),
-      bottomNavigationBar: const BottomNavigationBarWidget(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        backgroundColor: Colors.green,
-        elevation: 0,
-        child: const Icon(Icons.add, color: Colors.white),
-        shape: const CircleBorder(
-          side: BorderSide(
-            color: Colors.white,
-            width: 4, // 2mm white border
-          ),
+            Padding(
+              padding: const EdgeInsets.only(right:10.0,top: 10.0), // Add padding to the top of the search icon
+              child: IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  // Add search functionality here
+                },
+              ),
+            ), // Keep the search icon on the right
+          ],
         ),
-        // Adjust the size of the floating action button
-        // extendedPadding: EdgeInsets.all(20),
-        clipBehavior: Clip.none,
+        actions: [],
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
+
+      bottomNavigationBar: const BottomNavigationBarWidget(),
+      floatingActionButton: Container(
+        width: 60.0, // Adjust the width as needed
+        height: 60.0, // Adjust the height as needed
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.green,
+        ),
+        child: FloatingActionButton(
+          onPressed: () {
+            // Add your onPressed code here!
+          },
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          child: const Icon(Icons.add, color: Colors.white),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
@@ -82,11 +94,9 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       return SizedBox.shrink(); // Return an empty widget if there are less than 2 items
     }
     return BottomAppBar(
-      color: Colors.white, // Set the bottom navigation bar background color to white
-      shape: const CircularNotchedRectangle(), // Make room for the FAB
-      notchMargin: 8.0,
+      color: Colors.white,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Ensure even spacing between items
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           ..._bottomNavItems.asMap().entries.take(2).map((entry) {
             int index = entry.key;
@@ -124,14 +134,14 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
         children: [
           Icon(
             _getIcon(item['icon']),
-            color: _selectedIndex == index ? Colors.green : Color.fromRGBO(66, 75, 84, 0.6), // Light black with some opacity
-            size: 28, // Increase the icon size
+            color: _selectedIndex == index ? Colors.green : Color.fromRGBO(66, 75, 84, 0.6),
+            size: 28,
           ),
           Text(
             item['label'],
             style: TextStyle(
-              fontSize: 12, // Increase the text size
-              color: _selectedIndex == index ? Colors.green : Color.fromRGBO(66, 75, 84, 0.6), // Light black with some opacity
+              fontSize: 12,
+              color: _selectedIndex == index ? Colors.green : Color.fromRGBO(66, 75, 84, 0.6),
             ),
           ),
         ],
@@ -145,19 +155,19 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
       children: [
         Icon(
           Icons.circle,
-          color: Colors.white, // Match the background color of the bottom navigation bar
-          size: 28, // Same size as other icons
+          color: Colors.white,
+          size: 28,
         ),
-        const SizedBox(height: 12), // Maintain same space as text height
+        const SizedBox(height: 12),
       ],
     );
   }
 
   IconData _getIcon(String? iconString) {
     if (iconString == null || iconString.isEmpty) {
-      return Icons.circle; // You can choose any icon that represents an empty space, or create a custom icon
+      return Icons.circle;
     }
-    int code = int.tryParse(iconString.substring(2), radix: 16) ?? 0xe88a; // Default icon codepoint
+    int code = int.tryParse(iconString.substring(2), radix: 16) ?? 0xe88a;
     return IconData(code, fontFamily: 'MaterialIcons');
   }
 }

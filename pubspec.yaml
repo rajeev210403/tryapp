@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  flutter_svg: ^0.22.0
   flutter:
     sdk: flutter
 
@@ -50,6 +51,7 @@ flutter:
   assets:
     - assets/images/splash_image.jpg
     - assets/jsonfiles/bottom_bar.json
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
