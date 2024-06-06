@@ -3,6 +3,7 @@ import 'package:tryapp/login.dart';
 import 'splash_screen.dart'; // Import the splash screen
 import 'home_screen.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: HomeScreen(),
       // Set the splash screen as the home screen
     );
   }
