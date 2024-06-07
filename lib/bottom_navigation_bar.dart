@@ -80,7 +80,7 @@ class _BottomNavigationBarWidgetState
           Icon(
             _getIcon(item['icon']),
             color: _selectedIndex == index
-                ? Colors.green
+                ? Colors.green[900]
                 : Color.fromRGBO(66, 75, 84, 0.6),
             size: 28,
           ),
@@ -89,7 +89,7 @@ class _BottomNavigationBarWidgetState
             style: TextStyle(
               fontSize: 12,
               color: _selectedIndex == index
-                  ? Colors.green
+                  ? Colors.green[900]
                   : Color.fromRGBO(66, 75, 84, 0.6),
             ),
           ),
