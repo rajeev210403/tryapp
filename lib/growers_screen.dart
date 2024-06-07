@@ -96,7 +96,6 @@ class GrowersScreen extends StatelessWidget {
             ),
           ),
         ),
-
         SliverList(
           delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
@@ -185,12 +184,22 @@ class GrowersScreen extends StatelessWidget {
             // Handle selection of menu items here
           },
           itemBuilder: (BuildContext context) {
-            return {'Option 1', 'Option 2', 'Option 3'}.map((String choice) {
-              return PopupMenuItem<String>(
-                value: choice,
-                child: Text(choice),
-              );
-            }).toList();
+            return [
+              PopupMenuItem(
+                value: 'edit',
+                child: ListTile(
+                  leading: Icon(Icons.edit),
+                  title: Text('Edit'),
+                ),
+              ),
+              PopupMenuItem(
+                value: 'delete',
+                child: ListTile(
+                  leading: Icon(Icons.delete, color: Colors.red),
+                  title: Text('Delete', style: TextStyle(color: Colors.red)),
+                ),
+              ),
+            ];
           },
         ),
       ),
