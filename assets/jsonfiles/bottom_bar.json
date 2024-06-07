@@ -1,18 +1,22 @@
 [
   {
     "icon": "0xf107",
-    "label": "Home"
+    "label": "Home",
+    "link": ""
   },
   {
     "icon": "0xe491",
-    "label": "Growers"
+    "label": "Growers",
+    "link": "growers_screen"
   },
   {
     "icon": "0xe384",
-    "label": "Programs"
+    "label": "Programs",
+    "link": " "
   },
   {
     "icon": "0xe57f",
-    "label": "Settings"
+    "label": "Settings",
+    "link": " "
   }
 ]

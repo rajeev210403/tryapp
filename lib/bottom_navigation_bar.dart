@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'growers_screen.dart'; // Import the GrowersScreen
 
 class BottomNavigationBarWidget extends StatefulWidget {
   const BottomNavigationBarWidget({Key? key}) : super(key: key);
@@ -12,7 +13,6 @@ class BottomNavigationBarWidget extends StatefulWidget {
 class _BottomNavigationBarWidgetState
     extends State<BottomNavigationBarWidget> {
   int _selectedIndex = 0;
-
   List<dynamic> _bottomNavItems = [];
 
   @override
@@ -31,6 +31,20 @@ class _BottomNavigationBarWidgetState
     } catch (e) {
       print('Error loading JSON: $e');
     }
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    if (_bottomNavItems[index]['label'] == 'Growers') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => GrowersScreen()),
+      );
+    }
+    // Add other conditions here for different navigation items if needed
   }
 
   @override
@@ -69,11 +83,7 @@ class _BottomNavigationBarWidgetState
 
   Widget _buildNavItem(int index, dynamic item) {
     return InkWell(
-      onTap: () {
-        setState(() {
-          _selectedIndex = index; // Update the selected index
-        });
-      },
+      onTap: () => _onItemTapped(index), // Handle the tap event
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
