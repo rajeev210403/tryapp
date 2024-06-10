@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tryapp/growers_screen.dart';
-import 'package:tryapp/input.dart';
 import 'package:tryapp/login.dart';
 import 'splash_screen.dart'; // Import the splash screen
 import 'home_screen.dart';
+import 'farms_screen.dart';
 
 
 void main() {
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: InputPage(),
+      home: FarmsScreen(),
       // Set the splash screen as the home screen
     );
   }
