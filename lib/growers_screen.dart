@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'bottom_navigation_bar.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'input.dart'; // Import the input.dart file
 
 class GrowersScreen extends StatelessWidget {
   @override
@@ -82,6 +85,7 @@ class GrowersScreen extends StatelessWidget {
                       height: 40.0, // Set the desired height
                       child: FloatingActionButton(
                         onPressed: () {
+                          _navigateToAddGrower(context); // Call a function to navigate to input.dart
                           // Add functionality for the add button here
                         },
                         backgroundColor: Colors.green[900],
@@ -105,6 +109,20 @@ class GrowersScreen extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+  // Function to navigate to input.dart and pass JSON data
+  void _navigateToAddGrower(BuildContext context) async {
+    // Load JSON data
+    String jsonData = await rootBundle.loadString('assets/jsonfiles/adding_a_grower.json');
+    // Parse JSON
+    Map<String, dynamic> data = json.decode(jsonData);
+    // Navigate to input.dart and pass JSON data
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => InputPage(jsonData: data),
+      ),
     );
   }
 

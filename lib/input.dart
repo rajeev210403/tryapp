@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class InputPage extends StatefulWidget {
+  final Map<String, dynamic> jsonData;
+
+  InputPage({required this.jsonData});
+
   @override
   _InputPageState createState() => _InputPageState();
 }
 
 class _InputPageState extends State<InputPage> {
-  Map<String, dynamic>? jsonData;
   List<dynamic> fields = [];
   bool isLoading = true;
   String pageTitle = '';
@@ -16,23 +19,20 @@ class _InputPageState extends State<InputPage> {
   @override
   void initState() {
     super.initState();
-    loadJsonData();
+    loadData();
   }
 
-  Future<void> loadJsonData() async {
+  Future<void> loadData() async {
     try {
-      final String response = await rootBundle.loadString('assets/jsonfiles/adding_a_grower.json');
-      final data = json.decode(response) as Map<String, dynamic>;
+      if (widget.jsonData.isNotEmpty) {
+        pageTitle = widget.jsonData.keys.first;
+        fields = widget.jsonData[pageTitle];
+      }
       setState(() {
-        jsonData = data;
-        if (data.isNotEmpty) {
-          pageTitle = data.keys.first;
-          fields = data[pageTitle];
-        }
         isLoading = false;
       });
     } catch (e) {
-      print("Error loading JSON data: $e");
+      print("Error loading data: $e");
       setState(() {
         isLoading = false;
       });
@@ -131,6 +131,7 @@ class _InputPageState extends State<InputPage> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0), // Adjusted height for app bar
         child: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Colors.grey[100],
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -138,7 +139,7 @@ class _InputPageState extends State<InputPage> {
               IconButton(
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
-                  // Handle back action
+                  Navigator.pop(context);
                 },
               ),
               Expanded(
@@ -160,7 +161,7 @@ class _InputPageState extends State<InputPage> {
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
-          : jsonData == null
+          : widget.jsonData == null
           ? Center(child: Text('Failed to load data'))
           : Column(
         children: <Widget>[
@@ -199,5 +200,5 @@ class _InputPageState extends State<InputPage> {
 }
 
 void main() => runApp(MaterialApp(
-  home: InputPage(),
+  home: InputPage(jsonData: {}), // Provide initial empty JSON data
 ));
