@@ -24,6 +24,31 @@
       "fieldname": "Zonal Code",
       "type": "Number",
       "label": "Enter a Pincode"
+    },
+    {
+      "fieldname": "Name",
+      "type": "Text",
+      "label": "Enter grower's name"
+    },
+    {
+      "fieldname": "Email",
+      "type": "Email",
+      "label": "Enter grower's email"
+    },
+    {
+      "fieldname": "Country",
+      "type": "Text",
+      "label": "Enter a country"
+    },
+    {
+      "fieldname": "State",
+      "type": "Text",
+      "label": "Enter a state"
+    },
+    {
+      "fieldname": "Zonal Code",
+      "type": "Number",
+      "label": "Enter a Pincode"
     }
   ]
 }
