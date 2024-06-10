@@ -40,19 +40,23 @@ class _InputPageState extends State<InputPage> {
   }
 
   Widget buildInputField(Map<String, dynamic> field) {
-    TextInputType inputType;
+    Widget inputWidget;
+
     switch (field['type']) {
       case 'Text':
-        inputType = TextInputType.text;
+        inputWidget = buildTextField(field);
         break;
       case 'Email':
-        inputType = TextInputType.emailAddress;
+        inputWidget = buildTextField(field, keyboardType: TextInputType.emailAddress);
         break;
       case 'Number':
-        inputType = TextInputType.number;
+        inputWidget = buildTextField(field, keyboardType: TextInputType.number);
+        break;
+      case 'Dropdown':
+        inputWidget = buildDropdownField(field);
         break;
       default:
-        inputType = TextInputType.text;
+        inputWidget = buildTextField(field);
     }
 
     return Padding(
@@ -65,23 +69,57 @@ class _InputPageState extends State<InputPage> {
             style: TextStyle(fontSize: 16.0),
           ),
           SizedBox(height: 8.0),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: TextField(
-              keyboardType: inputType,
-              decoration: InputDecoration(
-                labelText: field['label'],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-              ),
-            ),
-          ),
+          inputWidget,
         ],
+      ),
+    );
+  }
+
+  Widget buildTextField(Map<String, dynamic> field, {TextInputType keyboardType = TextInputType.text}) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: TextField(
+        keyboardType: keyboardType,
+        decoration: InputDecoration(
+          labelText: field['label'],
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        ),
+      ),
+    );
+  }
+
+  Widget buildDropdownField(Map<String, dynamic> field) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: DropdownButtonFormField<String>(
+        value: null, // Set initial value or null if no initial value
+        onChanged: (String? value) {
+          // Handle dropdown value change
+        },
+        decoration: InputDecoration(
+          labelText: field['label'],
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        ),
+        items: (field['values'] as List<dynamic>).map<DropdownMenuItem<String>>(
+              (dynamic value) {
+            return DropdownMenuItem<String>(
+              value: value.toString(),
+              child: Text(value.toString()),
+            );
+          },
+        ).toList(),
       ),
     );
   }
