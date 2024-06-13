@@ -6,12 +6,10 @@ import 'package:flutter/services.dart';
 class SpeedometerWidget extends StatefulWidget {
   final double progress; // Progress from 0.0 to 1.0
   final List<String> stages;
-  final String currentStage;
 
   SpeedometerWidget({
     required this.progress,
     required this.stages,
-    required this.currentStage,
   });
 
   @override
@@ -38,16 +36,74 @@ class _SpeedometerWidgetState extends State<SpeedometerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 250,
-      height: 300, // Increased height to accommodate stages text
-      child: CustomPaint(
-        painter: SpeedometerPainter(
-          widget.progress,
-          widget.stages,
-          widget.currentStage,
-          plantImage,
-        ),
+    // Calculate current stage based on progress
+    int currentStageIndex = (widget.progress * (widget.stages.length - 1)).round();
+    String currentStage = widget.stages[currentStageIndex];
+
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            'PLANTING STAGES',
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 10.0),
+          Container(
+            width: 250,
+            height: 300, // Increased height to accommodate stages text
+            child: CustomPaint(
+              painter: SpeedometerPainter(
+                widget.progress,
+                widget.stages,
+                plantImage,
+              ),
+            ),
+          ),
+          SizedBox(height: 10.0),
+          Text(
+            '$currentStage Stage',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 10.0),
+          Text(
+            'During the $currentStage phase, growers often engage in fertilisation or triage actions.',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 14.0,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 20.0),
+          ElevatedButton(
+            onPressed: () {
+              // Add your functionality here
+            },
+            style: ElevatedButton.styleFrom(
+              // primary: Colors.green[800],
+              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            ),
+            child: Text(
+              'COLLECT DATA TO FIELDS',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16.0,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -56,10 +112,9 @@ class _SpeedometerWidgetState extends State<SpeedometerWidget> {
 class SpeedometerPainter extends CustomPainter {
   final double progress;
   final List<String> stages;
-  final String currentStage;
   final ui.Image? plantImage;
 
-  SpeedometerPainter(this.progress, this.stages, this.currentStage, this.plantImage);
+  SpeedometerPainter(this.progress, this.stages, this.plantImage);
 
   @override
   void paint(Canvas canvas, Size size) {
