@@ -24,4 +24,4 @@ flutter:
     - assets/images/splash_image.jpg
     - assets/jsonfiles/bottom_bar.json
     - assets/jsonfiles/adding_a_grower.json
-    - assets/jsonfiles/adding_a_grower.json
+    - assets/images/plant.png

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'bottom_navigation_bar.dart'; // Import your custom BottomNavigationBarWidget
+import 'speedometer_widget.dart'; // Import the speedometer widget
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double cellWidth = MediaQuery.of(context).size.width / 3 - 20; // Adjust the width based on the screen size
+    double cellWidth = MediaQuery.of(context).size.width / 3 - 20;
 
     List<Widget> listItems = [
       Padding(
@@ -20,7 +21,7 @@ class HomeScreen extends StatelessWidget {
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 1,
                 blurRadius: 1,
-                offset: Offset(0, 1), // changes position of shadow
+                offset: Offset(0, 1),
               ),
             ],
           ),
@@ -71,6 +72,16 @@ class HomeScreen extends StatelessWidget {
       ),
       Padding(
         padding: const EdgeInsets.all(10.0),
+        child: Center(
+          child: SpeedometerWidget(
+            progress: 0.4, // Example progress value
+            stages: ['PREPARATION', 'PLANTING', 'MANAGEMENT', 'HARVESTING', 'POST-HARVEST'],
+            currentStage: 'MANAGEMENT',
+          ),
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -90,138 +101,9 @@ class HomeScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: cellWidth,
-                      padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                            offset: Offset(0, 1), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              'Total \nGrowers',
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              '2220',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: cellWidth,
-                      padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                            offset: Offset(0, 1), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              'Total \nFarmers',
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              '4235',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: cellWidth,
-                      padding: const EdgeInsets.all(16.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                            offset: Offset(0, 1), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              'Total \nAcres',
-                              style: TextStyle(
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          FittedBox(
-                            fit: BoxFit.scaleDown,
-                            child: Text(
-                              '90420',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  _buildAnalyticsCard(cellWidth, 'Total \nGrowers', '2220'),
+                  _buildAnalyticsCard(cellWidth, 'Total \nFarmers', '4235'),
+                  _buildAnalyticsCard(cellWidth, 'Total \nAcres', '90420'),
                 ],
               ),
             ),
@@ -233,7 +115,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80.0), // Adjust the height as needed
+        preferredSize: Size.fromHeight(80.0),
         child: AppBar(
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -262,7 +144,7 @@ class HomeScreen extends StatelessWidget {
           iconTheme: IconThemeData(color: Colors.black),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBarWidget(), // Use your custom bottom navigation bar
+      bottomNavigationBar: BottomNavigationBarWidget(),
       body: Column(
         children: <Widget>[
           Expanded(
@@ -285,6 +167,53 @@ class HomeScreen extends StatelessWidget {
           color: Colors.green[900],
         ),
         child: Icon(Icons.add, color: Colors.white),
+      ),
+    );
+  }
+
+  Widget _buildAnalyticsCard(double width, String title, String value) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: width,
+        padding: const EdgeInsets.all(16.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 1,
+              offset: Offset(0, 1),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                value,
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

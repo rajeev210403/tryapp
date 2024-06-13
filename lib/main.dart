@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: GrowersScreen(),
+      home:HomeScreen (),
       // Set the splash screen as the home screen
     );
   }
