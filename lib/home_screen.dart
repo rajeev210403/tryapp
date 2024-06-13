@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
     List<Widget> listItems = [
       _buildGreetingCard(context),
       SpeedometerWidget(
-        progress: 0.8, // Example progress value
+        progress: 0.8, // Example progress value,,
         stages: ['PREPARATION', 'PLANTING', 'MANAGEMENT', 'HARVESTING', 'POST-HARVEST'],
       ),
       _buildAnalyticsSection(cellWidth),
