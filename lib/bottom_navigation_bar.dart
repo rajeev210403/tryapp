@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tryapp/home_screen.dart';
 import 'dart:convert';
 import 'growers_screen.dart'; // Import the GrowersScreen
 
@@ -32,20 +33,39 @@ class _BottomNavigationBarWidgetState
       print('Error loading JSON: $e');
     }
   }
-
   void _onItemTapped(int index) {
+    print('Tapped index: $index'); // Print tapped index for debugging
+    // _selectedIndex = index;
     setState(() {
       _selectedIndex = index;
     });
 
-    if (_bottomNavItems[index]['label'] == 'Growers') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => GrowersScreen()),
-      );
+    print('Selected index after setState: $_selectedIndex'); // Print selected index after updating state
+
+    switch (_bottomNavItems[index]['label']) {
+      case 'Home':
+        print('Navigating to HomeScreen'); // Debug statement to verify navigation
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        ).then((_) {
+          // Optional: Update _selectedIndex after returning from HomeScreen
+
+        });
+        break;
+      case 'Growers':
+        print('Navigating to GrowersScreen'); // Debug statement to verify navigation
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => GrowersScreen()),
+        ).then((_) {
+
+        });
+        break;
+    // Add cases for other navigation items as needed
     }
-    // Add other conditions here for different navigation items if needed
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -82,31 +102,29 @@ class _BottomNavigationBarWidgetState
   }
 
   Widget _buildNavItem(int index, dynamic item) {
+    bool isSelected = _selectedIndex == index;
     return InkWell(
-      onTap: () => _onItemTapped(index), // Handle the tap event
+      onTap: () => _onItemTapped(index),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
             _getIcon(item['icon']),
-            color: _selectedIndex == index
-                ? Colors.green[900]
-                : Color.fromRGBO(66, 75, 84, 0.6),
+            color: isSelected ? Colors.green[900] : Color.fromRGBO(66, 75, 84, 0.6),
             size: 28,
           ),
           Text(
             item['label'],
             style: TextStyle(
               fontSize: 12,
-              color: _selectedIndex == index
-                  ? Colors.green[900]
-                  : Color.fromRGBO(66, 75, 84, 0.6),
+              color: isSelected ? Colors.green[900] : Color.fromRGBO(66, 75, 84, 0.6),
             ),
           ),
         ],
       ),
     );
   }
+
 
   Widget _buildEmptyItem() {
     return SizedBox.shrink(); // Empty item
