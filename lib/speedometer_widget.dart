@@ -45,14 +45,7 @@ class _SpeedometerWidgetState extends State<SpeedometerWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            'PLANTING STAGES',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+
           SizedBox(height: 10.0),
           Container(
             width: 250,
@@ -78,31 +71,46 @@ class _SpeedometerWidgetState extends State<SpeedometerWidget> {
           Text(
             'During the $currentStage phase, growers often engage in fertilisation or triage actions.',
             style: TextStyle(
-              color: Colors.black,
+              color: Colors.grey[400],
               fontSize: 14.0,
             ),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 20.0),
-          ElevatedButton(
-            onPressed: () {
-              // Add your functionality here
-            },
-            style: ElevatedButton.styleFrom(
-              // primary: Colors.green[800],,,
-              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-            ),
-            child: Text(
-              'COLLECT DATA TO FIELDS',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
-              ),
+          Container(
+            width: 1000,
+            height: 1.0,
+            color: Colors.grey.withOpacity(0.5),
+            margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.1),
+          ),
+          SizedBox(height: 20.0),
+          Text(
+            'COLLECT DATA TO FIELDS',
+            style: TextStyle(
+              color: Colors.green[900],
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
             ),
           ),
+          // ElevatedButton(
+          //   onPressed: () {
+          //     // Add your functionality here
+          //   },
+          //   style: ElevatedButton.styleFrom(
+          //     // primary: Colors.green[800],,,
+          //     padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(20.0),
+          //     ),
+          //   ),
+          //   child: Text(
+          //     'COLLECT DATA TO FIELDS',
+          //     style: TextStyle(
+          //       color: Colors.white,
+          //       fontSize: 16.0,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

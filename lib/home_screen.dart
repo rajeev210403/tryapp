@@ -9,10 +9,7 @@ class HomeScreen extends StatelessWidget {
 
     List<Widget> listItems = [
       _buildGreetingCard(context),
-      SpeedometerWidget(
-        progress: 0.8, // Example progress value,,
-        stages: ['PREPARATION', 'PLANTING', 'MANAGEMENT', 'HARVESTING', 'POST-HARVEST'],
-      ),
+      _buildSpeedometerSection(),
       _buildAnalyticsSection(cellWidth),
     ];
 
@@ -148,6 +145,45 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+  Widget _buildSpeedometerSection() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0), // Adjust left padding here
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'PLANTING STAGES',
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 10.0),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1,
+                  blurRadius: 1,
+                  offset: Offset(0, 1),
+                ),
+              ],
+            ),
+            child: SpeedometerWidget(
+              progress: 0.8, // Example progress value,
+              stages: ['PREPARATION', 'PLANTING', 'MANAGEMENT', 'HARVESTING', 'POST-HARVEST'],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
 
   Widget _buildAnalyticsSection(double cellWidth) {
     return Padding(
