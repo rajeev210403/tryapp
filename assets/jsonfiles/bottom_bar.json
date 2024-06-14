@@ -2,21 +2,21 @@
   {
     "icon": "0xf107",
     "label": "Home",
-    "link": ""
+    "route": "/home"
   },
   {
     "icon": "0xe491",
     "label": "Growers",
-    "link": "growers_screen"
+    "route": "/growers"
   },
   {
     "icon": "0xe384",
     "label": "Programs",
-    "link": " "
+    "route": "/programs"
   },
   {
     "icon": "0xe57f",
     "label": "Settings",
-    "link": " "
+    "route": "/settings"
   }
 ]

@@ -37,7 +37,9 @@ class HomeScreen extends StatelessWidget {
     return PreferredSize(
       preferredSize: Size.fromHeight(80.0),
       child: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
+
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(

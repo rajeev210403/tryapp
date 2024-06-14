@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tryapp/login.dart';
-import 'splash_screen.dart'; // Import the splash screen
+import 'splash_screen.dart';
 import 'home_screen.dart';
-import 'farms_screen.dart';
-import 'input.dart';
-import 'growers_screen.dart';
-
+import 'growers_screen.dart'; // Import the GrowersScreen
+import 'programs_screen.dart'; // Import the ProgramsScreen
+import 'settings_screen.dart'; // Import the SettingsScreen
 
 void main() {
   runApp(const MyApp());
@@ -23,8 +21,15 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:HomeScreen (),
-      // Set the splash screen as the home screen
+      initialRoute: '/',
+      routes: {
+        '/': (context) => SplashScreen(),
+        '/home': (context) => HomeScreen(),
+        '/growers': (context) => GrowersScreen(),
+        '/programs': (context) => ProgramsScreen(),
+        '/settings': (context) => SettingsScreen(),
+        // Add other routes here as needed
+      },
     );
   }
 }
