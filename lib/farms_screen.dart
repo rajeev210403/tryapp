@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'bottom_navigation_bar.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import 'input.dart'; // Import the input.dart file
+import 'growers_screen.dart';
 
 class FarmsScreen extends StatelessWidget {
   @override
@@ -7,15 +11,12 @@ class FarmsScreen extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBarWidget(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        margin: EdgeInsets.only(top: 35.0),
-        width: 65.0,
-        height: 65.0,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.green[900],
-        ),
-        child: Icon(Icons.add, color: Colors.white),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+
+        },
+        backgroundColor: Colors.green[900],
+        child: Icon(Icons.add),
       ),
       body: _buildBody(context),
     );
@@ -26,7 +27,7 @@ class FarmsScreen extends StatelessWidget {
       slivers: [
         _buildSliverAppBar(),
         _buildCategoryButtons(context),
-        _buildResultsSummary(),
+        _buildResultsSummary(context),
         _buildFarmList(),
       ],
     );
@@ -89,6 +90,12 @@ class FarmsScreen extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           // Add category selection functionality here
+          if (label == 'Growers') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => GrowersScreen()),
+            );
+          }
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: selected ? Colors.black : Colors.grey[200],
@@ -109,7 +116,7 @@ class FarmsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildResultsSummary() {
+  Widget _buildResultsSummary(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -136,6 +143,7 @@ class FarmsScreen extends StatelessWidget {
                   height: 40.0,
                   child: FloatingActionButton(
                     onPressed: () {
+                      _navigateToAddFarm(context);
                       // Add functionality for the add button here
                     },
                     backgroundColor: Colors.green[900],
@@ -171,7 +179,7 @@ class FarmsScreen extends StatelessWidget {
             (BuildContext context, int index) {
           return _buildFarmItem(context, farms[index % farms.length]);
         },
-        childCount: 10,
+        childCount: farms.length,
       ),
     );
   }
@@ -242,4 +250,22 @@ class FarmsScreen extends StatelessWidget {
       ),
     );
   }
+
+  void _navigateToAddFarm(BuildContext context) async {
+    // Load JSON data (Example: loading a JSON file from assets)
+    String jsonData = await rootBundle.loadString('assets/jsonfiles/adding_a_farm.json');
+    // Parse JSON
+    Map<String, dynamic> data = json.decode(jsonData);
+    // Navigate to input.dart and pass JSON data
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => InputPage(jsonData: data),
+      ),
+    );
+  }
 }
+
+void main() => runApp(MaterialApp(
+  home: FarmsScreen(),
+));

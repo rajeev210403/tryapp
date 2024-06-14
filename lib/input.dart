@@ -49,11 +49,11 @@ class _InputPageState extends State<InputPage> {
       case 'Email':
         inputWidget = buildTextField(field, keyboardType: TextInputType.emailAddress);
         break;
-      case 'Number':
-        inputWidget = buildTextField(field, keyboardType: TextInputType.number);
-        break;
       case 'Dropdown':
         inputWidget = buildDropdownField(field);
+        break;
+      case 'LargeText':
+        inputWidget = buildLargeTextField(field);
         break;
       default:
         inputWidget = buildTextField(field);
@@ -120,6 +120,25 @@ class _InputPageState extends State<InputPage> {
             );
           },
         ).toList(),
+      ),
+    );
+  }
+
+  Widget buildLargeTextField(Map<String, dynamic> field) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: TextField(
+        maxLines: 5, // Adjust the number of lines as needed
+        decoration: InputDecoration(
+          labelText: field['label'],
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        ),
       ),
     );
   }

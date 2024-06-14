@@ -1,0 +1,25 @@
+{
+  "Adding a farm": [
+    {
+      "fieldname": "Grower",
+      "type": "Dropdown",
+      "label": "Select grower",
+      "values": ["Grower1", "Grower2", "Grower3"]
+    },
+    {
+      "fieldname": "Farm Name",
+      "type": "Text",
+      "label": "Enter farm name"
+    },
+    {
+      "fieldname": "Description",
+      "type": "LargeText",
+      "label": "Enter description ..."
+    },
+    {
+      "fieldname": "FSA Farm ID",
+      "type": "Text",
+      "label": "Enter FSA Farm ID"
+    }
+  ]
+}
