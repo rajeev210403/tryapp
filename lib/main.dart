@@ -4,6 +4,7 @@ import 'home_screen.dart';
 import 'growers_screen.dart'; // Import the GrowersScreen
 import 'programs_screen.dart'; // Import the ProgramsScreen
 import 'settings_screen.dart'; // Import the SettingsScreen
+import 'farms_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => SplashScreen(),
         '/home': (context) => HomeScreen(),
         '/growers': (context) => GrowersScreen(),
+        '/farms': (context) => FarmsScreen(),
         '/programs': (context) => ProgramsScreen(),
         '/settings': (context) => SettingsScreen(),
         // Add other routes here as needed

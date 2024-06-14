@@ -3,6 +3,7 @@ import 'bottom_navigation_bar.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'input.dart'; // Import the input.dart file
+import 'farms_screen.dart';
 
 class GrowersScreen extends StatelessWidget {
   @override
@@ -111,6 +112,7 @@ class GrowersScreen extends StatelessWidget {
       ],
     );
   }
+
   // Function to navigate to input.dart and pass JSON data
   void _navigateToAddGrower(BuildContext context) async {
     // Load JSON data
@@ -155,6 +157,12 @@ class GrowersScreen extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           // Add category selection functionality here
+          if (label == 'Farms') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => FarmsScreen()),
+            );
+          }
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: selected ? Colors.black : Colors.grey[200], // Change color based on selection
@@ -174,7 +182,6 @@ class GrowersScreen extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _buildGrowerItem(BuildContext context, int index) {
     List<String> growers = [
