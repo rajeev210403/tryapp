@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'bottom_navigation_bar.dart';
-import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'dart:convert';
 import 'input.dart'; // Import the input.dart file
 import 'farms_screen.dart';
+import 'bottom_navigation_bar.dart';
 
 class GrowersScreen extends StatelessWidget {
   @override
@@ -62,7 +62,7 @@ class GrowersScreen extends StatelessWidget {
         ),
         SliverToBoxAdapter(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0), // Add top and bottom padding
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -82,17 +82,16 @@ class GrowersScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 10.0),
                     Container(
-                      width: 40.0, // Set the desired width
-                      height: 40.0, // Set the desired height
+                      width: 40.0,
+                      height: 40.0,
                       child: FloatingActionButton(
                         onPressed: () {
-                          _navigateToAddGrower(context); // Call a function to navigate to input.dart
-                          // Add functionality for the add button here
+                          _navigateToAddGrower(context); // Navigate to InputPage for adding a grower
                         },
                         backgroundColor: Colors.green[900],
                         shape: CircleBorder(),
-                        elevation: 0, // Set elevation to 0
-                        child: Icon(Icons.add, color: Colors.white, size: 20.0), // Set icon size
+                        elevation: 0,
+                        child: Icon(Icons.add, color: Colors.white, size: 20.0),
                       ),
                     ),
                   ],
@@ -101,38 +100,31 @@ class GrowersScreen extends StatelessWidget {
             ),
           ),
         ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-              return _buildGrowerItem(context, index);
-            },
-            childCount: 10,
-          ),
-        ),
+        _buildGrowerList(),
       ],
     );
   }
 
-  // Function to navigate to input.dart and pass JSON data
+  // Function to navigate to InputPage and pass JSON data
   void _navigateToAddGrower(BuildContext context) async {
     // Load JSON data
     String jsonData = await rootBundle.loadString('assets/jsonfiles/adding_a_grower.json');
     // Parse JSON
     Map<String, dynamic> data = json.decode(jsonData);
-    // Navigate to input.dart and pass JSON data
+    // Navigate to InputPage and pass JSON data
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => InputPage(jsonData: data),
+        builder: (context) => InputPage(jsonFilePath: 'assets/jsonfiles/adding_a_grower.json'),
       ),
     );
   }
 
   Widget _buildCategoryButtons(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.0), // Add top and bottom padding
+      padding: EdgeInsets.symmetric(vertical: 10.0),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 10.0), // Add left and right margins
+        margin: EdgeInsets.symmetric(horizontal: 10.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -165,7 +157,7 @@ class GrowersScreen extends StatelessWidget {
           }
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: selected ? Colors.black : Colors.grey[200], // Change color based on selection
+          backgroundColor: selected ? Colors.black : Colors.grey[200],
           foregroundColor: selected ? Colors.white : Colors.black,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25.0),
@@ -183,7 +175,7 @@ class GrowersScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildGrowerItem(BuildContext context, int index) {
+  Widget _buildGrowerList() {
     List<String> growers = [
       'Carter Brothers Partnership',
       'Don Kittler Farms',
@@ -197,13 +189,24 @@ class GrowersScreen extends StatelessWidget {
       'Don Kittler Farms'
     ];
 
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+          return _buildGrowerItem(context, growers[index % growers.length]);
+        },
+        childCount: growers.length,
+      ),
+    );
+  }
+
+  Widget _buildGrowerItem(BuildContext context, String growerName) {
     return Card(
       margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: ListTile(
-        title: Text(growers[index % growers.length]),
+        title: Text(growerName),
         trailing: PopupMenuButton<String>(
           onSelected: (String value) {
             // Handle selection of menu items here

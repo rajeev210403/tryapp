@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'bottom_navigation_bar.dart';
 import 'legal_screen.dart'; // Import the LegalScreen widget
+import 'input.dart'; // Import the InputPage widget
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -16,13 +17,13 @@ class SettingsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildCardSection('General', [
-                _buildSettingsTile(context, 'Edit profile', ''),
-                _buildSettingsTile(context, 'Contact information', ''),
+                _buildSettingsItem(context, 'Edit profile', InputPage(jsonFilePath: 'assets/jsonfiles/edit_profile.json',)),
+                // _buildSettingsItem(context, 'Contact information', InputPage()),
               ]),
               const SizedBox(height: 20),
               _buildCardSection('Legal', [
-                _buildSettingsTile(context, 'Privacy Policy', 'assets/jsonfiles/privacy_policy.json'),
-                _buildSettingsTile(context, 'Terms and conditions', 'assets/jsonfiles/terms_conditions.json'),
+                _buildSettingsItem(context, 'Privacy Policy', LegalScreen(jsonFilePath: 'assets/jsonfiles/privacy_policy.json')),
+                _buildSettingsItem(context, 'Terms and conditions', LegalScreen(jsonFilePath: 'assets/jsonfiles/terms_conditions.json')),
               ]),
               const SizedBox(height: 30),
               Center(
@@ -119,7 +120,7 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSettingsTile(BuildContext context, String title, String jsonFilePath) {
+  Widget _buildSettingsItem(BuildContext context, String title, Widget screen) {
     return ListTile(
       title: Text(
         title,
@@ -136,9 +137,7 @@ class SettingsScreen extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) => LegalScreen(jsonFilePath: jsonFilePath),
-          ),
+          MaterialPageRoute(builder: (context) => screen),
         );
       },
     );

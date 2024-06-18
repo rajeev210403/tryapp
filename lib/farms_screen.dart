@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'bottom_navigation_bar.dart';
-import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'dart:convert';
 import 'input.dart'; // Import the input.dart file
 import 'growers_screen.dart';
+import 'bottom_navigation_bar.dart';
 
 class FarmsScreen extends StatelessWidget {
   @override
@@ -11,12 +11,15 @@ class FarmsScreen extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBarWidget(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-
-        },
-        backgroundColor: Colors.green[900],
-        child: Icon(Icons.add),
+      floatingActionButton: Container(
+        margin: EdgeInsets.only(top: 35.0),
+        width: 65.0,
+        height: 65.0,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.green[900],
+        ),
+        child: Icon(Icons.add, color: Colors.white),
       ),
       body: _buildBody(context),
     );
@@ -143,8 +146,7 @@ class FarmsScreen extends StatelessWidget {
                   height: 40.0,
                   child: FloatingActionButton(
                     onPressed: () {
-                      _navigateToAddFarm(context);
-                      // Add functionality for the add button here
+                      _navigateToAddFarm(context); // Navigate to InputPage for adding a farm
                     },
                     backgroundColor: Colors.green[900],
                     shape: CircleBorder(),
@@ -256,11 +258,11 @@ class FarmsScreen extends StatelessWidget {
     String jsonData = await rootBundle.loadString('assets/jsonfiles/adding_a_farm.json');
     // Parse JSON
     Map<String, dynamic> data = json.decode(jsonData);
-    // Navigate to input.dart and pass JSON data
+    // Navigate to InputPage and pass JSON file path instead of data
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => InputPage(jsonData: data),
+        builder: (context) => InputPage(jsonFilePath: 'assets/jsonfiles/adding_a_farm.json'),
       ),
     );
   }

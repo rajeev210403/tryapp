@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class InputPage extends StatefulWidget {
-  final Map<String, dynamic> jsonData;
+  final String jsonFilePath;
 
-  InputPage({required this.jsonData});
+  InputPage({required this.jsonFilePath});
 
   @override
   _InputPageState createState() => _InputPageState();
@@ -24,18 +24,61 @@ class _InputPageState extends State<InputPage> {
 
   Future<void> loadData() async {
     try {
-      if (widget.jsonData.isNotEmpty) {
-        pageTitle = widget.jsonData.keys.first;
-        fields = widget.jsonData[pageTitle];
+      String jsonString = await rootBundle.loadString(widget.jsonFilePath);
+      Map<String, dynamic> jsonData = json.decode(jsonString);
+
+      if (jsonData.isNotEmpty) {
+        setState(() {
+          pageTitle = jsonData.keys.first;
+          fields = jsonData[pageTitle];
+          isLoading = false;
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        // Handle empty JSON data case
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text('Failed to load data from JSON file.'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
       }
-      setState(() {
-        isLoading = false;
-      });
     } catch (e) {
       print("Error loading data: $e");
       setState(() {
         isLoading = false;
       });
+      // Handle error loading JSON data
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Failed to load data: $e'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 
@@ -180,8 +223,8 @@ class _InputPageState extends State<InputPage> {
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
-          : widget.jsonData == null
-          ? Center(child: Text('Failed to load data'))
+          : fields.isEmpty
+          ? Center(child: Text('No fields found'))
           : Column(
         children: <Widget>[
           Expanded(
@@ -218,6 +261,3 @@ class _InputPageState extends State<InputPage> {
   }
 }
 
-void main() => runApp(MaterialApp(
-  home: InputPage(jsonData: {}), // Provide initial empty JSON data
-));
