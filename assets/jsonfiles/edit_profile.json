@@ -1,0 +1,29 @@
+{
+  "Edit profile": [
+    {
+      "fieldname": "Profile Picture",
+      "type": "ProfilePicture",
+      "label": ""
+    },
+    {
+      "fieldname": "First Name",
+      "type": "Text",
+      "label": "First Name"
+    },
+    {
+      "fieldname": "Last Name",
+      "type": "Text",
+      "label": "Last Name"
+    },
+    {
+      "fieldname": "Date of Birth",
+      "type": "Date",
+      "label": "Date of Birth"
+    },
+    {
+      "fieldname": "Save",
+      "type": "Button",
+      "label": "Save"
+    }
+  ]
+}

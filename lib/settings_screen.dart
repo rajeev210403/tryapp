@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'bottom_navigation_bar.dart';
+import 'legal_screen.dart'; // Import the LegalScreen widget
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -7,7 +8,7 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: _buildAppBar(),
       bottomNavigationBar: BottomNavigationBarWidget(),
-      backgroundColor: Colors.grey[100], // Light green background color
+      backgroundColor: Colors.grey[100], // Light grey background color
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -15,13 +16,13 @@ class SettingsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildCardSection('General', [
-                _buildSettingsTile(context, 'Edit profile'),
-                _buildSettingsTile(context, 'Contact information'),
+                _buildSettingsTile(context, 'Edit profile', ''),
+                _buildSettingsTile(context, 'Contact information', ''),
               ]),
               const SizedBox(height: 20),
               _buildCardSection('Legal', [
-                _buildSettingsTile(context, 'Privacy Policy'),
-                _buildSettingsTile(context, 'Terms and conditions'),
+                _buildSettingsTile(context, 'Privacy Policy', 'assets/jsonfiles/privacy_policy.json'),
+                _buildSettingsTile(context, 'Terms and conditions', 'assets/jsonfiles/terms_conditions.json'),
               ]),
               const SizedBox(height: 30),
               Center(
@@ -39,11 +40,11 @@ class SettingsScreen extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     // Add log out functionality here
+                    _logout(context);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[300], // background color
-                    foregroundColor: Colors.black,
-                    // text color
+                    backgroundColor: Colors.grey[300], // Background color
+                    foregroundColor: Colors.black, // Text color
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -118,7 +119,7 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSettingsTile(BuildContext context, String title) {
+  Widget _buildSettingsTile(BuildContext context, String title, String jsonFilePath) {
     return ListTile(
       title: Text(
         title,
@@ -133,9 +134,20 @@ class SettingsScreen extends StatelessWidget {
         size: 20,
       ),
       onTap: () {
-        // Add navigation or other functionality here
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LegalScreen(jsonFilePath: jsonFilePath),
+          ),
+        );
       },
     );
+  }
+
+  void _logout(BuildContext context) {
+    // Implement your logout functionality here
+    print('User logged out');
+    // Example: Navigator.pushReplacementNamed(context, '/login');
   }
 
   Widget _buildFloatingActionButton() {
@@ -147,7 +159,12 @@ class SettingsScreen extends StatelessWidget {
         shape: BoxShape.circle,
         color: Colors.green[900],
       ),
-      child: Icon(Icons.add, color: Colors.white),
+      child: IconButton(
+        icon: Icon(Icons.add, color: Colors.white),
+        onPressed: () {
+          // Add FAB functionality here
+        },
+      ),
     );
   }
 }

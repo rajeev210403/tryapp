@@ -25,4 +25,6 @@ flutter:
     - assets/jsonfiles/bottom_bar.json
     - assets/jsonfiles/adding_a_grower.json
     - assets/jsonfiles/adding_a_farm.json
+    - assets/jsonfiles/privacy_policy.json
+    - assets/jsonfiles/terms_conditions.json
     - assets/images/plant.png
